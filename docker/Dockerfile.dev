@@ -75,6 +75,9 @@ RUN if [ "$MACHINE_TYPE" = "gpu" ]; then export USE_CUDA=1; fi \
     && mkdir /home/model-server/model-store && chown -R model-server /home/model-server/model-store \
     && chown -R model-server /home/venv
 
+RUN pip3 install numpy opencv-python scipy tabulate
+RUN pip3 install numpy --pre torch[dynamo] --force-reinstall --extra-index-url https://download.pytorch.org/whl/nightly/cu113
+
 EXPOSE 8080 8081 8082 7070 7071
 USER model-server
 WORKDIR /home/model-server
